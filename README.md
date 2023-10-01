@@ -11,3 +11,8 @@ The App has two choices. One to Upload the image manually. The Other to Click us
 If the app doesn't detect any human it returns No human Detected.
 
 
+# References 
+Yolo Object Detection - https://towardsdatascience.com/yolo-object-detection-with-opencv-and-python-21e50ac599e9
+Dynamsoft Implementation - https://www.dynamsoft.com/codepool/web-browser-javascript-camera-access.html
+Model - Revisiting ResNets: Improved Training and Scaling Strategies
+
