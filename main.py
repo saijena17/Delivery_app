@@ -8,7 +8,6 @@ from flask import Flask, request, render_template
 from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 import matplotlib.pyplot as plt
-#from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
 from wtforms.validators import InputRequired
 from flask import jsonify
@@ -17,13 +16,7 @@ import cv2
 import ssl
 import numpy as np
 import pandas as pd
-import keras
-from keras import optimizers
 import tensorflow as tf
-from keras.models import Model
-from keras.callbacks import ReduceLROnPlateau
-from sklearn.model_selection import train_test_split
-from keras.layers import Input, Conv2D, Dense, concatenate
 from tensorflow.keras.models import load_model
 from keras.models import Model
 import requests
