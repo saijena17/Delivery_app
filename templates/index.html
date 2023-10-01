@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+        p.ex1 {
+          margin-left: 40%;
+        }
+        body {background :url("https://i.pinimg.com/564x/95/e9/eb/95e9eb8faa14dbe53e2a2675b07e890f.jpg");
+            background-size: no-repeat;
+             background-size: 100% 30%;
+            background-blend-mode: lighten;}
+        </style>
+        <script src="https://unpkg.com/dynamsoft-camera-enhancer@2.1.0/dist/dce.js"></script>
+    </head>
+    <body>  
+            <div>
+            <h1 class="ex1" style="color:white"> Choose one Option</h1>
+            <p class="ex1" style='font-size: 40px; color:white'><b>Upload Image</b></p>
+            <form method="POST" action="/engine" enctype="multipart/form-data">
+                {{form.hidden_tag()}}
+                {{form.file()}}
+                <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+                {{prediction_text}}
+            </form>
+
+            <form method="POST" action="/process" enctype="multipart/form-data">
+
+            <p class="ex1" style='font-size: 40px; color:white'><b>Click Pictures</b></p>
+            <button type="button" onclick="Snapshot()" class="btn btn-primary btn-block btn-large">Click</button>
+            <div id="result"></div>
+            <div id="enhancerUIContainer" style="height: 100vh;"></div>
+            <script>
+                let enhancer = null;
+                (async () => {
+                    enhancer = await Dynamsoft.DCE.CameraEnhancer.createInstance();
+                    document.getElementById("enhancerUIContainer").appendChild(enhancer.getUIElement());
+                    await enhancer.open(true);
+                })();
+            </script>
+            <script src="https://code.jquery.com/jquery-2.2.4.min.js">
+            </script>
+            <script>
+                function Clicking()
+                    {
+                        if (enhancer) {
+                            let frame = enhancer.getFrame();
+                        
+                            let width = screen.availWidth;
+                            let height = screen.availHeight;
+                            let popW = 640, popH = 640;
+                            let left = (width - popW) / 2;
+                            let top = (height - popH) / 2;
+                            const canvas = frame.canvas.toDataURL("image/png")
+                            fetch("/process", {method:"POST",headers:{"content-type":"application/json"}, body:JSON.stringify({image:canvas})}).then(data=>data.json()).then(data=>{
+                                $("#result").text(data["division"])
+                            })//sending the data and wait for the come back
+                        }
+                    };
+                    var shots  = [];
+                    var grabLimit = 10;  // Number of screenshots to take
+                    var grabRate  = 10000; // Miliseconds. 500 = half a second
+                    var count     = 0;
+
+                    function Snapshot() {
+                        var grabber = setTimeout(function() {
+                            count++;
+                            if (count <= grabLimit) {
+                                Clicking();
+                                Snapshot(); // Call Snapshot function recursively
+                            }
+                        }, grabRate);
+                    }
+
+            </script>
+            </form>
+        </div>
+    </body>
+</html>
