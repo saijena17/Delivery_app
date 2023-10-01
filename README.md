@@ -16,5 +16,5 @@ Yolo Object Detection - https://towardsdatascience.com/yolo-object-detection-wit
 
 Dynamsoft Implementation - https://www.dynamsoft.com/codepool/web-browser-javascript-camera-access.html
 
-Model - Revisiting ResNets: Improved Training and Scaling Strategies
+Model Paper - Revisiting ResNets: Improved Training and Scaling Strategies
 
